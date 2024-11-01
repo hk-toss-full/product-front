@@ -19,7 +19,9 @@ const getBaseURL = () => {
     : "http://localhost:8080";
 };
 
-axios.defaults.baseURL = import.meta.env.PROD || "http://localhost:8080";
+axios.defaults.baseURL = import.meta.env.PROD
+  ? location.hostname
+  : "http://localhost:8080";
 
 const getAllProductsApi = async () => {
   const { data } = await axios({
