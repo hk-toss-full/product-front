@@ -2,6 +2,7 @@ import { useState } from 'react'
 import './App.css'
 import axios from 'axios'
 import { useEffect } from 'react'
+
 /*
 product 
 id name quantity price
@@ -13,31 +14,34 @@ const initProduct = {
   name:"",
   price:0,
 }
+axios.defaults.baseURL = import.meta.env.PROD || "http://localhost:8080"
+
 const getAllProductsApi = async () =>{
   const { data } = await axios({
     method:"GET",
-    url:"http://localhost:8080/api/v1/products"
+    url:"/api/v1/products"
   })
   return data
 }
 const sellingApi = async (id) => {
   const {data} = await axios({
-    method: "PUT", url:`http://localhost:8080/api/v1/products/${id}/selling`
+    method: "PUT", url:`/api/v1/products/${id}/selling`
   })
 }
 const receivingApi = async (id) => {
   const {data} = await axios({
-    method: "PUT", url:`http://localhost:8080/api/v1/products/${id}/receiving`
+    method: "PUT", url:`/api/v1/products/${id}/receiving`
   })
 }
 const addProductApi = async (product) =>{
   const {data} = await axios({
-    method: "POST", url:`http://localhost:8080/api/v1/products`,
+    method: "POST", url:`/api/v1/products`,
     data: product
   })
 }
 
 function App() {
+  console.log(import.meta.env)
   const [product, setProduct] = useState({...initProduct })
   const [products, setProducts] = useState([])
   const getAllProducts = async()=>{
