@@ -14,28 +14,31 @@ const initProduct = {
   name:"",
   price:0,
 }
-axios.defaults.baseURL = import.meta.env.PROD ? location.hostname : "http://localhost:8080";
+const getBaseURL = ()=>{
+  return import.meta.env.PROD ? `http://${location.hostname}` : "http://localhost:8080";
+}
+
 
 const getAllProductsApi = async () =>{
   const { data } = await axios({
     method:"GET",
-    url:"/api/v1/products"
+    url:`${getBaseURL()}/api/v1/products`
   })
   return data
 }
 const sellingApi = async (id) => {
   const {data} = await axios({
-    method: "PUT", url:`/api/v1/products/${id}/selling`
+    method: "PUT", url:`${getBaseURL()}/api/v1/products/${id}/selling`
   })
 }
 const receivingApi = async (id) => {
   const {data} = await axios({
-    method: "PUT", url:`/api/v1/products/${id}/receiving`
+    method: "PUT", url:`${getBaseURL()}/api/v1/products/${id}/receiving`
   })
 }
 const addProductApi = async (product) =>{
   const {data} = await axios({
-    method: "POST", url:`/api/v1/products`,
+    method: "POST", url:`${getBaseURL()}/api/v1/products`,
     data: product
   })
 }
